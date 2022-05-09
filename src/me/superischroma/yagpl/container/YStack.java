@@ -2,7 +2,7 @@ package me.superischroma.yagpl.container;
 
 import java.util.NoSuchElementException;
 
-public class YStack<E>
+public class YStack<E> implements YContainer<E>
 {
     private Node<E> top;
     private int size;
@@ -42,10 +42,25 @@ public class YStack<E>
         return size;
     }
 
+    @Override
+    public boolean isEmpty()
+    {
+        return size == 0;
+    }
+
+    @Override
+    public String toString()
+    {
+        StringBuilder builder = new StringBuilder();
+        for (Node<E> node = top; node != null; node = node.below)
+            builder.append(node == top ? "[" : ", ").append(node.value);
+        return builder.append(']').toString();
+    }
+
     private static class Node<T>
     {
-        T value;
-        Node<T> below;
+        private final T value;
+        private Node<T> below;
 
         public Node(T value, Node<T> below)
         {
